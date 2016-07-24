@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="ImageView↓"/>
+            android:text="ImageView in Shape.DEFAULT↓"/>
 
         <com.chenyuwei.loadimageview.LoadImageView
             android:id="@+id/imageView"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="LoadImageView↓"/>
+            android:text="LoadImageView in Shape.Circle↓"/>
 
         <com.chenyuwei.loadimageview.LoadImageView
             android:id="@+id/loadImageView"
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="WaveImageView↓"/>
+            android:text="WaveImageView in Shape.ROUND↓"/>
 
         <com.chenyuwei.loadimageview.WaveImageView
             android:id="@+id/waveImageView"

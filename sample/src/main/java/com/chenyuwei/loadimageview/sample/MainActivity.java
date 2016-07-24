@@ -28,10 +28,24 @@ public class MainActivity extends AppCompatActivity {
         waveImageView = (WaveImageView) findViewById(R.id.waveImageView);
 
 
-        ImageLoader.with(this,imageView,"http://img0.imgtn.bdimg.com/it/u=1378161988,3289698924&fm=206&gp=0.jpg");
+        /**
+         * ImageView in Shape.DEFAULT
+         * */
+        ImageLoader.with(this,imageView,"http://img0.imgtn.bdimg.com/it/u=1378161988,3289698924&fm=206&gp=0.jpg",
+                new Options.Builder()
+                        .setShape(Options.Shape.DEFAULT)
+                        .build());
 
-        loadImageView.load("http://img4.duitang.com/uploads/blog/201403/21/20140321130651_at3yv.thumb.600_0.jpeg");
+        /**
+         * LoadImageView in Shape.Circle
+         * */
+        loadImageView.load("http://img4.duitang.com/uploads/blog/201403/21/20140321130651_at3yv.thumb.600_0.jpeg",new Options.Builder()
+                .setShape(Options.Shape.Circle)
+                .build());
 
+        /**
+         * WaveImageView in Shape.ROUND
+         * */
         waveImageView.load("http://a.hiphotos.baidu.com/zhidao/pic/item/adaf2edda3cc7cd9f595fcf03d01213fb80e915b.jpg", new ImageListener() {
             @Override
             public void onStart() {
@@ -47,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
             public void onFailed() {
                 Log.e("waveImageView","onFailed");
             }
-        },new Options.Builder().setFailedRes(R.mipmap.ic_launcher).build());
-
+        },new Options.Builder()
+                .setShape(Options.Shape.Round)
+                .setFailedRes(R.mipmap.ic_launcher)
+                .build());
     }
 }
