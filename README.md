@@ -9,15 +9,16 @@ Set options to choose different shapes.
 
  <img src="http://a2.qpic.cn/psb?/V11nMvcA1OpCIy/KlNUEzXD.CBsHjD4ep5KuOcSMTeoaqidjfgxoJTrkfM!/b/dKYAAAAAAAAA&bo=hgFaAgAAAAACB*w!&rf=viewer_4" width="60%">
 
-
-## Downloads
-
-[load-image-view-1.0.0.aar](https://github.com/ChenViVi/LoadImageView/raw/master/display/load-image-view-1.0.0.aar)
-
-[sample.apk](https://github.com/ChenViVi/LoadImageView/raw/master/display/load-image-view-1.0.0.aar)
-
-
 ## Usage
+Simple use
+```
+loadImageView.setShape(Options.Shape.Circle);
+loadImageView.load(R.mipmap.ic_launcher);
+loadImageView.load(bitmap);
+loadImageView.load("http://a.hiphotos.baidu.com/zhidao/pic/item/adaf2edda3cc7cd9f595fcf03d01213fb80e915b.jpg");
+```
+
+
 Load into imageView
  ```
  ImageLoader.with(this,imageView,"http://img0.imgtn.bdimg.com/it/u=1378161988,3289698924&fm=206&gp=0.jpg",

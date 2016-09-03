@@ -12,7 +12,7 @@ import android.view.animation.LinearInterpolator;
 /**
  * Created by vivi on 2016/7/23.
  */
-public class WaveImageView extends LoadImageView{
+public class WaveImageView extends LoadImageView {
 
     private Paint mPaint;
     private Path mPath;
