@@ -99,5 +99,6 @@ public class WaveImageView extends LoadImageView {
     @Override
     public void onFailed() {
         super.onFailed();
+        stopAnim();
     }
 }
