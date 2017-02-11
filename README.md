@@ -2,16 +2,19 @@
 
 ## 下载Demo
 
-[sample.apk](https://github.com/ChenViVi/LoadImageView/blob/master/display/sample.apk)
+[sample.apk](https://github.com/ChenViVi/LoadImageView/raw/master/display/sample.apk)
+
+## 下载aar
+[load-image-view-1.1.0.aar](https://github.com/ChenViVi/LoadImageView/raw/master/display/load-image-view-1.1.0.aar)
 
 ## 特性
 使用WaveImageView来获得如下加载动画
 
- <img src="http://a3.qpic.cn/psb?/V11nMvcA1OpCIy/CMOMIEe7sFI.2SBaOLLmDDexFBMDhMx*4oiDtTH.9gw!/b/dLAAAAAAAAAA&bo=eAFMAgAAAAACBRY!&rf=viewer_4" width="60%">
+ <img src="http://a3.qpic.cn/psb?/V11nMvcA1OpCIy/CMOMIEe7sFI.2SBaOLLmDDexFBMDhMx*4oiDtTH.9gw!/b/dLAAAAAAAAAA&bo=eAFMAgAAAAACBRY!&rf=viewer_4" width="40%">
 
 设置选项来改变ImageView的形状
 
- <img src="http://p1.bqimg.com/4851/84e29ebf2918d776.png" width="60%">
+ <img src="http://p1.bqimg.com/4851/84e29ebf2918d776.png" width="40%">
 
 ## 用法
 
