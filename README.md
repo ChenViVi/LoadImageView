@@ -1,5 +1,7 @@
 # LoadImageView
 
+代码风格简洁的、支持多种网络或本地图像资源的、可以设置形状的ImageView
+
 ## 下载Demo
 
 [sample.apk](https://github.com/ChenViVi/LoadImageView/raw/master/display/sample.apk)
