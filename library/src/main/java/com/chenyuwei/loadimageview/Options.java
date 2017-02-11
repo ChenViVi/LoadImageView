@@ -62,7 +62,7 @@ public class Options {
 
     public enum Shape {
         DEFAULT,
-        Circle,
-        Round
+        CIRCLE,
+        ROUND
     }
 }

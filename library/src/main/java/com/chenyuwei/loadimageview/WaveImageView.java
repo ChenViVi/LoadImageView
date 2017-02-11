@@ -44,7 +44,7 @@ public class WaveImageView extends LoadImageView {
         super.onSizeChanged(w, h, oldw, oldh);
         mScreenHeight = h;
         mScreenWidth = w;
-        mWaveCount = (int) Math.round(mScreenWidth / mWaveLength + 1.5);
+        mWaveCount = (int) Math.round(mScreenWidth / mWaveLength +1.5);
         mCenterY = mScreenHeight / 2;
     }
 

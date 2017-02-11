@@ -100,7 +100,7 @@ public class LoadImageView extends ImageView implements ImageListener {
         this.options.setShape(shape);
     }
 
-    public void setFailedRes(int failedRes) {
+    public void setDefaultImg(int failedRes) {
         this.options.setFailedRes(failedRes);
     }
 

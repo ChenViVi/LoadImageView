@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
          * LoadImageView in Shape.Circle
          * */
         loadImageView.load("http://img4.duitang.com/uploads/blog/201403/21/20140321130651_at3yv.thumb.600_0.jpeg",new Options.Builder()
-                .setShape(Options.Shape.Circle)
+                .setShape(Options.Shape.CIRCLE)
                 .build());
 
         /**
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("waveImageView","onFailed");
             }
         },new Options.Builder()
-                .setShape(Options.Shape.Round)
+                .setShape(Options.Shape.ROUND)
                 .setFailedRes(R.mipmap.ic_launcher)
                 .build());
     }
