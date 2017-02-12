@@ -26,7 +26,6 @@ public class LoadImageView extends ImageView implements ImageListener {
         super(context, attrs);
         this.context = context;
         TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.LoadImageView);
-        int i = a.getResourceId(R.styleable.LoadImageView_failed_src,R.drawable.img_default);
         options.setFailedRes(a.getResourceId(R.styleable.LoadImageView_failed_src,R.drawable.img_default));
         switch (a.getInt(R.styleable.LoadImageView_shape,-1)){
             case 0:
@@ -42,7 +41,6 @@ public class LoadImageView extends ImageView implements ImageListener {
         if (a.getString(R.styleable.LoadImageView_load_src) != null){
             load(a.getString(R.styleable.LoadImageView_load_src));
         }
-        Log.e("debug","i=" + i);
         a.recycle();
     }
 
