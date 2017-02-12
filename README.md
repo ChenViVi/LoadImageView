@@ -7,7 +7,7 @@
 [sample.apk](https://github.com/ChenViVi/LoadImageView/raw/master/display/sample.apk)
 
 ## 下载aar
-[load-image-view-1.1.0.aar](https://github.com/ChenViVi/LoadImageView/raw/master/display/load-image-view-1.1.0.aar)
+[load-image-view-1.1.1.aar](https://github.com/ChenViVi/LoadImageView/raw/master/display/load-image-view-1.1.1.aar)
 
 ## 特性
 使用WaveImageView来获得如下加载动画
@@ -21,16 +21,20 @@
 ## 用法
 
 XML
-```
-<com.chenyuwei.loadimageview.LoadImageView
-      android:id="@+id/imageView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
 
-<com.chenyuwei.loadimageview.WaveImageView
-      android:id="@+id/waveImageView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+```
+<!--
+             设置形状 app:shape
+             设置加载图像的路径 app:load_src
+             设置加载失败时显示的图像 app:failed_src
+             -->
+ <com.chenyuwei.loadimageview.LoadImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:shape="circle"
+                app:load_src="http://i1.piimg.com/4851/126b8732dbd303cd.jpg"
+                app:failed_src="@mipmap/ic_launcher"/>
 ```
 
 加载不同种类的图像资源

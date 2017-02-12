@@ -1,7 +1,7 @@
 package com.chenyuwei.loadimageview.sample;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -10,7 +10,6 @@ import com.chenyuwei.loadimageview.ImageLoader;
 import com.chenyuwei.loadimageview.LoadImageView;
 import com.chenyuwei.loadimageview.Options;
 import com.chenyuwei.loadimageview.WaveImageView;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         loadImageView = (LoadImageView) findViewById(R.id.loadImageView);
         waveImageView = (WaveImageView) findViewById(R.id.waveImageView);
-
 
         /**
          * ImageView in Shape.DEFAULT
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("waveImageView","onFailed");
             }
         },new Options.Builder()
-                .setShape(Options.Shape.ROUND)
+                //.setShape(Options.Shape.ROUND)
                 .setFailedRes(R.mipmap.ic_launcher)
                 .build());
     }

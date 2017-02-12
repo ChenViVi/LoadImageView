@@ -1,6 +1,7 @@
 package com.chenyuwei.loadimageview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -24,6 +25,25 @@ public class LoadImageView extends ImageView implements ImageListener {
     public LoadImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.LoadImageView);
+        int i = a.getResourceId(R.styleable.LoadImageView_failed_src,R.drawable.img_default);
+        options.setFailedRes(a.getResourceId(R.styleable.LoadImageView_failed_src,R.drawable.img_default));
+        switch (a.getInt(R.styleable.LoadImageView_shape,-1)){
+            case 0:
+                options.setShape(Options.Shape.DEFAULT);
+                break;
+            case 1:
+                options.setShape(Options.Shape.CIRCLE);
+                break;
+            case 2:
+                options.setShape(Options.Shape.ROUND);
+                break;
+        }
+        if (a.getString(R.styleable.LoadImageView_load_src) != null){
+            load(a.getString(R.styleable.LoadImageView_load_src));
+        }
+        Log.e("debug","i=" + i);
+        a.recycle();
     }
 
     public LoadImageView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -32,16 +52,16 @@ public class LoadImageView extends ImageView implements ImageListener {
 
     public void load(String url) {
         this.url = url;
-        ImageLoader.with(this.context, this, url, this, this.options);
+        ImageLoader.with(this.context, this, url, this,options);
     }
 
     public void load(int resourceId) {
         this.resourceId = resourceId;
-        ImageLoader.with(this.context, this, resourceId, this, this.options);
+        ImageLoader.with(this.context, this, resourceId, this, options);
     }
 
     public void load(Bitmap bitmap) {
-        ImageLoader.with(this.context, this, bitmap, this, this.options);
+        ImageLoader.with(this.context, this, bitmap, this, options);
     }
 
     public void load(String url, ImageListener listener) {
@@ -108,14 +128,12 @@ public class LoadImageView extends ImageView implements ImageListener {
         if(this.listener != null) {
             this.listener.onStart();
         }
-
     }
 
     public void onFinish() {
         if(this.listener != null) {
             this.listener.onFinish();
         }
-
     }
 
     public void onFailed() {
@@ -123,6 +141,5 @@ public class LoadImageView extends ImageView implements ImageListener {
         if(this.listener != null) {
             this.listener.onFailed();
         }
-
     }
 }
