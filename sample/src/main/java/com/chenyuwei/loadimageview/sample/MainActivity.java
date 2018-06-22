@@ -10,6 +10,7 @@ import com.chenyuwei.loadimageview.ImageLoader;
 import com.chenyuwei.loadimageview.LoadImageView;
 import com.chenyuwei.loadimageview.Options;
 import com.chenyuwei.loadimageview.WaveImageView;
+import com.squareup.leakcanary.LeakCanary;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        LeakCanary.install(getApplication());
         imageView = (ImageView) findViewById(R.id.imageView);
         loadImageView = (LoadImageView) findViewById(R.id.loadImageView);
         waveImageView = (WaveImageView) findViewById(R.id.waveImageView);
