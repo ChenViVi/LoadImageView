@@ -9,209 +9,125 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-import com.bumptech.glide.request.target.ImageViewTarget;
 
-import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-/**
- * Created by vivi on 2016/7/23.
- */
-public class ImageLoader {
-    public ImageLoader() {
-    }
 
-    public static void with(Context context, ImageView imageView, String url) {
-        Glide.with(context.getApplicationContext()).load(url).error((new Options()).getFailedRes()).into(imageView);
-    }
+public class ImageLoader implements ImageListener{
 
-    public static void with(Context context, ImageView imageView, int resourceId) {
-        Glide.with(context.getApplicationContext()).load(resourceId).error((new Options()).getFailedRes()).into(imageView);
-    }
+    private Context context;
+    private GlideDrawableImageViewTarget target;
+    private ArrayList<ImageListener> listeners = new ArrayList<>();
+    private Options options;
 
-    public static void with(Context context, ImageView imageView, Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        Glide.with(context.getApplicationContext()).load(baos.toByteArray()).error((new Options()).getFailedRes()).into(imageView);
-    }
-
-    public static void with(Context context, final ImageView imageView, String url, final ImageListener listener) {
-        Glide.with(context.getApplicationContext()).load(url).error((new Options()).getFailedRes()).into(new GlideDrawableImageViewTarget(imageView) {
+    public ImageLoader(Context context, ImageView imageView){
+        options = new Options();
+        this.context = context;
+        addListener(this);
+        target = new GlideDrawableImageViewTarget(imageView) {
             public void onStart() {
                 super.onStart();
-                listener.onStart();
-            }
-
-            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                super.onResourceReady(drawable, anim);
-                listener.onFinish();
-            }
-
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                listener.onFailed();
-            }
-        });
-    }
-
-    public static void with(Context context, final ImageView imageView, int resourceId, final ImageListener listener) {
-        Glide.with(context.getApplicationContext()).load(resourceId).error((new Options()).getFailedRes()).into(new GlideDrawableImageViewTarget(imageView) {
-            public void onStart() {
-                super.onStart();
-                listener.onStart();
-            }
-
-            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                super.onResourceReady(drawable, anim);
-                listener.onFinish();
-            }
-
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                listener.onFailed();
-            }
-        });
-    }
-
-    public static void with(Context context, final ImageView imageView, Bitmap bitmap, final ImageListener listener) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        Glide.with(context.getApplicationContext()).load(baos.toByteArray()).error((new Options()).getFailedRes()).into(new GlideDrawableImageViewTarget(imageView) {
-            public void onStart() {
-                super.onStart();
-                listener.onStart();
-            }
-
-            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                super.onResourceReady(drawable, anim);
-                listener.onFinish();
-            }
-
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                listener.onFailed();
-            }
-        });
-    }
-
-    public static void with(Context context, ImageView imageView, String url, Options options) {
-        switchShape(context.getApplicationContext(), url, new GlideDrawableImageViewTarget(imageView), options);
-    }
-
-    public static void with(Context context, ImageView imageView, int resourceId, Options options) {
-        switchShape(context.getApplicationContext(), resourceId, new GlideDrawableImageViewTarget(imageView), options);
-    }
-
-    public static void with(Context context, ImageView imageView, Bitmap bitmap, Options options) {
-        switchShape(context.getApplicationContext(), bitmap, new GlideDrawableImageViewTarget(imageView), options);
-    }
-
-    public static void with(Context context, final ImageView imageView, String url, final ImageListener listener, Options options) {
-        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView) {
-            public void onStart() {
-                super.onStart();
-                listener.onStart();
-            }
-
-            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                super.onResourceReady(drawable, anim);
-                listener.onFinish();
-            }
-
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                listener.onFailed();
-            }
-        };
-        switchShape(context.getApplicationContext(), url, target, options);
-    }
-
-    public static void with(Context context, final ImageView imageView, int resourceId, final ImageListener listener, Options options) {
-        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView) {
-            public void onStart() {
-                super.onStart();
-                listener.onStart();
-            }
-
-            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                super.onResourceReady(drawable, anim);
-                listener.onFinish();
-            }
-
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                listener.onFailed();
-            }
-        };
-        switchShape(context.getApplicationContext(), resourceId, target, options);
-    }
-
-    public static void with(Context context, final ImageView imageView, Bitmap bitmap, final ImageListener listener, Options options) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView) {
-            public void onStart() {
-                super.onStart();
-                listener.onStart();
+                for (ImageListener listener : listeners) {
+                    listener.onStart();
+                }
             }
 
             @Override
             public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
                 super.onResourceReady(drawable, anim);
-                listener.onFinish();
+                for (ImageListener listener : listeners) {
+                    listener.onFinish();
+                }
             }
 
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);
-                listener.onFailed();
+                for (ImageListener listener : listeners) {
+                    listener.onFailed();
+                }
             }
         };
-        switchShape(context.getApplicationContext(), bitmap, target, options);
     }
 
-    private static void switchShape(Context context, String url, ImageViewTarget<GlideDrawable> target, Options options) {
+    public ImageLoader setFailedRes(int failedRes) {
+        this.options.setFailedRes(failedRes);
+        return this;
+    }
+
+    public ImageLoader setShape(Options.Shape shape){
+        this.options.setShape(shape);
+        return this;
+    }
+
+    public ImageLoader setOptions(Options options) {
+        this.options = options;
+        return this;
+    }
+
+    public void load(String url){
         switch(options.getShape()) {
             case DEFAULT:
-                Glide.with(context.getApplicationContext()).load(url).error(options.getFailedRes()).into(target);
+                Glide.with(context.getApplicationContext()).load(url).into(target);
                 break;
             case CIRCLE:
-                Glide.with(context.getApplicationContext()).load(url).error(options.getFailedRes()).bitmapTransform(new CropCircleTransformation(context)).into(target);
+                Glide.with(context.getApplicationContext()).load(url).bitmapTransform(new CropCircleTransformation(context)).into(target);
                 break;
             case ROUND:
-                Glide.with(context.getApplicationContext()).load(url).error(options.getFailedRes()).bitmapTransform(new RoundedCornersTransformation(context,30,0, RoundedCornersTransformation.CornerType.ALL)).into(target);
+                Glide.with(context.getApplicationContext()).load(url).bitmapTransform(new RoundedCornersTransformation(context,30,0, RoundedCornersTransformation.CornerType.ALL)).into(target);
         }
+    }
+
+    public void load(int resourceId){
+        switch(options.getShape()) {
+            case DEFAULT:
+                Glide.with(context.getApplicationContext()).load(resourceId).into(target);
+                break;
+            case CIRCLE:
+                Glide.with(context.getApplicationContext()).load(resourceId).bitmapTransform(new CropCircleTransformation(context)).into(target);
+                break;
+            case ROUND:
+                Glide.with(context.getApplicationContext()).load(resourceId).bitmapTransform(new RoundedCornersTransformation(context,30,0, RoundedCornersTransformation.CornerType.ALL)).into(target);
+        }
+    }
+
+    public void load(Bitmap bitmap){
+        switch(options.getShape()) {
+            case DEFAULT:
+                Glide.with(context.getApplicationContext()).load(bitmap).into(target);
+                break;
+            case CIRCLE:
+                Glide.with(context.getApplicationContext()).load(bitmap).bitmapTransform(new CropCircleTransformation(context)).into(target);
+                break;
+            case ROUND:
+                Glide.with(context.getApplicationContext()).load(bitmap).bitmapTransform(new RoundedCornersTransformation(context,30,0, RoundedCornersTransformation.CornerType.ALL)).into(target);
+        }
+    }
+
+    public ImageLoader addListener(ImageListener listener){
+        listeners.add(listener);
+        return this;
+    }
+
+    public ImageLoader removeListener(ImageListener listener){
+        listeners.remove(listener);
+        return this;
+    }
+
+    @Override
+    public void onStart() {
 
     }
 
-    private static void switchShape(Context context, int resourceId, ImageViewTarget<GlideDrawable> target, Options options) {
-        switch(options.getShape()) {
-            case DEFAULT:
-                Glide.with(context.getApplicationContext()).load(resourceId).error(options.getFailedRes()).into(target);
-                break;
-            case CIRCLE:
-                Glide.with(context.getApplicationContext()).load(resourceId).error(options.getFailedRes()).bitmapTransform(new CropCircleTransformation(context)).into(target);
-                break;
-            case ROUND:
-                Glide.with(context.getApplicationContext()).load(resourceId).error(options.getFailedRes()).bitmapTransform(new RoundedCornersTransformation(context,30,0, RoundedCornersTransformation.CornerType.ALL)).into(target);
-        }
+    @Override
+    public void onFinish() {
 
     }
 
-    private static void switchShape(Context context, Bitmap bitmap, ImageViewTarget<GlideDrawable> target, Options options) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        switch(options.getShape()) {
-            case DEFAULT:
-                Glide.with(context.getApplicationContext()).load(baos.toByteArray()).error(options.getFailedRes()).into(target);
-                break;
-            case CIRCLE:
-                Glide.with(context.getApplicationContext()).load(baos.toByteArray()).error(options.getFailedRes()).bitmapTransform(new CropCircleTransformation(context)).into(target);
-                break;
-            case ROUND:
-                Glide.with(context.getApplicationContext()).load(baos.toByteArray()).error(options.getFailedRes()).bitmapTransform(new RoundedCornersTransformation(context,30,0, RoundedCornersTransformation.CornerType.ALL)).into(target);
-        }
-
+    @Override
+    public void onFailed() {
+        load(options.getFailedRes());
     }
 }

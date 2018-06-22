@@ -10,42 +10,37 @@ import com.chenyuwei.loadimageview.ImageLoader;
 import com.chenyuwei.loadimageview.LoadImageView;
 import com.chenyuwei.loadimageview.Options;
 import com.chenyuwei.loadimageview.WaveImageView;
-import com.squareup.leakcanary.LeakCanary;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView imageView;
-    private LoadImageView loadImageView;
-    private WaveImageView waveImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LeakCanary.install(getApplication());
-        imageView = (ImageView) findViewById(R.id.imageView);
-        loadImageView = (LoadImageView) findViewById(R.id.loadImageView);
-        waveImageView = (WaveImageView) findViewById(R.id.waveImageView);
+
+        ImageView imageView = findViewById(R.id.imageView);
+        LoadImageView loadImageView = findViewById(R.id.loadImageView);
+        WaveImageView waveImageView = findViewById(R.id.waveImageView);
+        LoadImageView loadImageView2 = findViewById(R.id.loadImageView2);
 
         /**
          * ImageView in Shape.DEFAULT
          * */
-        ImageLoader.with(this,imageView,"http://img0.imgtn.bdimg.com/it/u=1378161988,3289698924&fm=206&gp=0.jpg",
-                new Options.Builder()
-                        .setShape(Options.Shape.DEFAULT)
-                        .build());
+        ImageLoader imageLoader = new ImageLoader(this, imageView);
+        imageLoader.setShape(Options.Shape.DEFAULT)
+                .load("http://img0.imgtn.bdimg.com/it/u=1378161988,3289698924&fm=206&gp=0.jpg");
 
         /**
          * LoadImageView in Shape.Circle
          * */
-        loadImageView.load("http://img4.duitang.com/uploads/blog/201403/21/20140321130651_at3yv.thumb.600_0.jpeg",new Options.Builder()
-                .setShape(Options.Shape.CIRCLE)
-                .build());
+        loadImageView.setShape(Options.Shape.CIRCLE)
+                .load("http://img4.duitang.com/uploads/blog/201403/21/20140321130651_at3yv.thumb.600_0.jpeg");
 
         /**
          * WaveImageView in Shape.ROUND
          * */
-        waveImageView.load("http://a.hiphotos.baidu.com/zhidao/pic/item/adaf2edda3cc7cd9f595fcf03d01213fb80e915b.jpg", new ImageListener() {
+        waveImageView.addListener(new ImageListener() {
             @Override
             public void onStart() {
                 Log.e("waveImageView","onStart");
@@ -60,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
             public void onFailed() {
                 Log.e("waveImageView","onFailed");
             }
-        },new Options.Builder()
-                //.setShape(Options.Shape.ROUND)
-                .setFailedRes(R.mipmap.ic_launcher)
-                .build());
+        }).load("http://a.hiphotos.baidu.com/zhidao/pic/item/adaf2edda3cc7cd9f595fcf03d01213fb80e915b.jpg");
+
+        loadImageView2.setShape(Options.Shape.CIRCLE)
+                .setFailedRes(R.drawable.globe)
+                .load("invalid link");
     }
 }

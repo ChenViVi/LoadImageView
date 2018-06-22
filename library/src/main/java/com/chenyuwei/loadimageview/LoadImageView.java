@@ -10,32 +10,29 @@ import android.widget.ImageView;
 /**
  * Created by vivi on 2016/7/23.
  */
-public class LoadImageView extends ImageView implements ImageListener {
-    private Context context;
-    private String url;
-    private int resourceId;
-    private ImageListener listener;
-    private Options options = new Options();
+public class LoadImageView extends ImageView {
+
+    private ImageLoader imageLoader;
 
     public LoadImageView(Context context) {
         super(context);
-        this.context = context;
+        imageLoader = new ImageLoader(context, this);
     }
 
     public LoadImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
+        imageLoader = new ImageLoader(context, this);
         TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.LoadImageView);
-        options.setFailedRes(a.getResourceId(R.styleable.LoadImageView_failed_src,R.drawable.img_default));
+        imageLoader.setFailedRes(a.getResourceId(R.styleable.LoadImageView_failed_src,R.drawable.img_default));
         switch (a.getInt(R.styleable.LoadImageView_shape,-1)){
             case 0:
-                options.setShape(Options.Shape.DEFAULT);
+                imageLoader.setShape(Options.Shape.DEFAULT);
                 break;
             case 1:
-                options.setShape(Options.Shape.CIRCLE);
+                imageLoader.setShape(Options.Shape.CIRCLE);
                 break;
             case 2:
-                options.setShape(Options.Shape.ROUND);
+                imageLoader.setShape(Options.Shape.ROUND);
                 break;
         }
         if (a.getString(R.styleable.LoadImageView_load_src) != null){
@@ -48,96 +45,59 @@ public class LoadImageView extends ImageView implements ImageListener {
         super(context, attrs, defStyleAttr);
     }
 
-    public void load(String url) {
-        this.url = url;
-        ImageLoader.with(this.context, this, url, this,options);
+    public void load(final String url) {
+        imageLoader.load(url);
+        addListener(new ImageListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onFailed() {
+                Log.e("LoadImageViewFailed", "url= " + url);
+            }
+        });
     }
 
-    public void load(int resourceId) {
-        this.resourceId = resourceId;
-        ImageLoader.with(this.context, this, resourceId, this, options);
+    public LoadImageView load(int resourceId) {
+        imageLoader.load(resourceId);
+        return this;
     }
 
-    public void load(Bitmap bitmap) {
-        ImageLoader.with(this.context, this, bitmap, this, options);
+    public LoadImageView load(Bitmap bitmap) {
+        imageLoader.load(bitmap);
+        return this;
     }
 
-    public void load(String url, ImageListener listener) {
-        this.url = url;
-        this.listener = listener;
-        ImageLoader.with(this.context, this, url, this);
+    public LoadImageView addListener(ImageListener listener){
+        imageLoader.addListener(listener);
+        return this;
     }
 
-    public void load(int resourceId, ImageListener listener) {
-        this.resourceId = resourceId;
-        this.listener = listener;
-        ImageLoader.with(this.context, this, resourceId, this);
+    public LoadImageView removeListener(ImageListener listener){
+        imageLoader.removeListener(listener);
+        return this;
     }
 
-    public void load(Bitmap bitmap, ImageListener listener) {
-        this.listener = listener;
-        ImageLoader.with(this.context, this, bitmap, this);
+
+    public LoadImageView setOptions(Options options) {
+        imageLoader.setOptions(options);
+        return this;
     }
 
-    public void load(String url, Options options) {
-        this.url = url;
-        ImageLoader.with(this.context, this, url, this, options);
+    public LoadImageView setShape(Options.Shape shape) {
+        imageLoader.setShape(shape);
+        return this;
     }
 
-    public void load(int resourceId, Options options) {
-        this.resourceId = resourceId;
-        ImageLoader.with(this.context, this, resourceId, this, options);
-    }
-
-    public void load(Bitmap bitmap, Options options) {
-        ImageLoader.with(this.context, this, bitmap, this, options);
-    }
-
-    public void load(String url, ImageListener listener, Options options) {
-        this.url = url;
-        this.listener = listener;
-        ImageLoader.with(this.context, this, url, this, options);
-    }
-
-    public void load(int resourceId, ImageListener listener, Options options) {
-        this.resourceId = resourceId;
-        this.listener = listener;
-        ImageLoader.with(this.context, this, resourceId, this, options);
-    }
-
-    public void load(Bitmap bitmap, ImageListener listener, Options options) {
-        this.listener = listener;
-        ImageLoader.with(this.context, this, bitmap, this, options);
-    }
-
-    public void setOptions(Options options) {
-        this.options = options;
-    }
-
-    public void setShaple(Options.Shape shape) {
-        this.options.setShape(shape);
-    }
-
-    public void setDefaultImg(int failedRes) {
-        this.options.setFailedRes(failedRes);
-    }
-
-    public void onStart() {
-        if(this.listener != null) {
-            this.listener.onStart();
-        }
-    }
-
-    public void onFinish() {
-        if(this.listener != null) {
-            this.listener.onFinish();
-        }
-    }
-
-    public void onFailed() {
-        Log.e("LoadImageViewFailed", "url= " + this.url);
-        if(this.listener != null) {
-            this.listener.onFailed();
-        }
+    public LoadImageView setFailedRes(int failedRes) {
+        imageLoader.setFailedRes(failedRes);
+        return this;
     }
 }

@@ -12,7 +12,7 @@
     tools:context="com.chenyuwei.loadimageview.sample.MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Usage in XML"/>
+                android:text="Usage in XML↓"/>
             <!--
              设置形状 app:shape
              设置加载图像的路径 app:load_src
@@ -80,6 +80,22 @@
                 app:shape="circle"
                 app:load_src="http://i1.piimg.com/4851/126b8732dbd303cd.jpg"
                 app:failed_src="@mipmap/ic_launcher"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="LoadImageView with failedRes↓"/>
+            <com.chenyuwei.loadimageview.LoadImageView
+                android:id="@+id/loadImageView2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
